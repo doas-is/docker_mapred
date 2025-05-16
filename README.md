@@ -2,6 +2,11 @@
 MapReduce & Spark Analysis with Docker
 This project leverages Docker to spin up a multi-node Hadoop (MapReduce) and Apache Spark cluster for distributed data processing and analytics. By using Docker Compose, you can quickly launch a full-fledged environment with a NameNode, Secondary NameNode, and multiple DataNodes—all within isolated containers.
 
+Note: the dataset i worked on is purchases.txt - https://www.kaggle.com/datasets/dsfelix/purchasestxt
+
+
+Hadoop version that's been used is 3.3.6 :https://hadoop.apache.org/release/3.3.6.html
+
 
 Features
 
