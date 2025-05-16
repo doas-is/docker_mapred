@@ -1,0 +1,86 @@
+version: '3.8'
+
+services:
+  namenode:
+    build: .
+    container_name: namenode
+    hostname: namenode
+    ports:
+      - "9870:9870"  # Web UI
+      - "9000:9000"  # NameNode RPC
+    volumes:
+      - ./config:/hadoop-config  # Hadoop configs (unchanged)
+      - ./logs/namenode:/hadoop-logs   # Logs (auto-created)
+      - ./purchases.txt:/input/purchases.txt  # Hadoop input (now in root)
+    networks:
+      - hadoopnet
+
+  secondary:
+    build: .
+    container_name: secondary
+    hostname: secondary
+    volumes:
+      - ./config:/hadoop-config
+      - ./logs/secondary:/hadoop-logs
+    networks:
+      - hadoopnet
+
+  datanode1:
+    build: .
+    container_name: datanode1
+    hostname: datanode1
+    volumes:
+      - ./config:/hadoop-config
+      - ./logs/datanode1:/hadoop-logs
+    networks:
+      - hadoopnet
+
+  datanode2:
+    build: .
+    container_name: datanode2
+    hostname: datanode2
+    volumes:
+      - ./config:/hadoop-config
+      - ./logs/datanode2:/hadoop-logs
+    networks:
+      - hadoopnet
+
+  datanode3:
+    build: .
+    container_name: datanode3
+    hostname: datanode3
+    volumes:
+      - ./config:/hadoop-config
+      - ./logs/datanode3:/hadoop-logs
+    networks:
+      - hadoopnet
+
+  datanode4:
+    build: .
+    container_name: datanode4
+    hostname: datanode4
+    volumes:
+      - ./config:/hadoop-config
+      - ./logs/datanode4:/hadoop-logs
+    networks:
+      - hadoopnet
+
+  spark:
+    image: bitnami/spark:latest
+    container_name: spark-master
+    environment:
+      - SPARK_MODE=master
+    volumes:
+      - ./spark-job:/app                # Spark job code (unchanged)
+      - ./spark-input:/spark-input      # Spark input (purchases.txt lives here)
+      - ./spark-output:/spark-output    # Spark output (auto-created)
+    networks:
+      - hadoopnet
+    command: >
+      bash -c "
+        /opt/bitnami/spark/bin/spark-submit --master local[*] /app/analysis.py /spark-input/purchases.txt /spark-output/results.txt
+      "
+
+networks:
+  hadoopnet:
+    driver: bridge

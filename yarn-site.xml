@@ -1,0 +1,31 @@
+<configuration>
+    <!-- ResourceManager address -->
+    <property>
+        <name>yarn.resourcemanager.address</name>
+        <value>namenode:8032</value> <!-- Make sure this points to the ResourceManager container -->
+    </property>
+
+    <!-- ResourceManager web UI address -->
+    <property>
+        <name>yarn.resourcemanager.webapp.address</name>
+        <value>namenode:8088</value> <!-- Make sure this points to your ResourceManager UI -->
+    </property>
+
+    <!-- ResourceManager hostname -->
+    <property>
+        <name>yarn.resourcemanager.hostname</name>
+        <value>namenode</value>
+    </property>
+
+    <!-- NodeManager hostname -->
+    <property>
+        <name>yarn.nodemanager.hostname</name>
+        <value>localhost</value> <!-- Or the name of the DataNode container -->
+    </property>
+
+    <!-- Enable YARN resource manager -->
+    <property>
+        <name>yarn.resourcemanager.resource-tracker.address</name>
+        <value>namenode:8025</value>
+    </property>
+</configuration>
